@@ -25,7 +25,7 @@ const routes: Routes = [
     // :id = URL parameter
     { path: 'edit-listing/:id', component: EditListingPageComponent },
     // My Listing
-    { path: 'my-listing', component: MyListingsPageComponent },
+    { path: 'my-listings', component: MyListingsPageComponent },
     // New Listing
     { path: 'new-listing', component: NewListingPageComponent }
 ];

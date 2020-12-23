@@ -1,1 +1,19 @@
-<p>my-listings-page works!</p>
+<!-- ngFor is to display a separate div for each listing
+    Allows to change structure on HTML file depending on data in TypeScript file -->
+<div class="content-box"
+    *ngFor="let listing of listings">
+    <h3>{{listing.name}}</h3>
+    <p>{{listing.description}}</p>
+    <p>R{{listing.price}}</p>
+
+    <div class="buttons-container">
+        <!-- routerLink allows to change URL or content without reloading the page
+        {{}} allows to insert data from TypeScript file into HTML page-->
+        <a
+            routerLink="/edit-listing/{{listing.id}}">
+            <button>Edit</button>
+        </a>
+        <button
+            (click)="onDeleteClicked(listing.id)">Delete</button>
+    </div>
+</div>
