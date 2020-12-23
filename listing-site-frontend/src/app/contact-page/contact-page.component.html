@@ -1,1 +1,24 @@
-<p>contact-page works!</p>
+<div class="content-box">
+    <h3>Send the seller a message:</h3>
+    <div>
+        <label>Your email address:
+            <!-- [(ngModel)] Provides input binding
+            When email changes in input -->
+            <input type="email" name="email"
+                placeholder="eg.example.com"
+                [(ngModel)]="email" />
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Your message:
+            <textarea name="message" cols="20"
+                rows="5"
+                [(ngModel)]="message"></textarea>
+        </label>
+    </div>
+    <!-- Hook into event
+    sendMessage method -->
+    <button (click)="sendMessage()">Send</button>
+</div>
