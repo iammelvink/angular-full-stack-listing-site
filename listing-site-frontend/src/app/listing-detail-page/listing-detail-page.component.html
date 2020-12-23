@@ -1,1 +1,15 @@
-<p>listing-detail-page works!</p>
+<div class="content-box">
+    <!-- routerLink allows to change URL or content without reloading the page
+        {{}} allows to insert data from TypeScript file into HTML page-->
+    <a routerLink="/listings">
+        <button>Back</button>
+    </a>
+
+    <h2>{{listing.name}}</h2>
+    <p>{{listing.description}}</p>
+    <p>R{{listing.price}}</p>
+
+    <a routerLink="/contact/{{listing.id}}">
+        <button>Contact Seller</button>
+    </a>
+</div>
