@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "listing-site-frontend"
+  "defaultProject": "listing-site-frontend",
+  "cli": {
+    "analytics": false
+  }
 }
