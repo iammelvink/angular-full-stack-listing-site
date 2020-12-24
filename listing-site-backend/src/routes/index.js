@@ -13,6 +13,9 @@ import {
 import {
   createNewListingRoute
 } from './createNewListing';
+import {
+  updateListingRoute
+} from './updateListing';
 
 // Export Array of all routes
 export default [
@@ -20,5 +23,6 @@ export default [
   getListingRoute,
   addViewToListingRoute,
   getUserListingsRoute,
-  createNewListingRoute
+  createNewListingRoute,
+  updateListingRoute
 ];

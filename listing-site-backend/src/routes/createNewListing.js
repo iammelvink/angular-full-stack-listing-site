@@ -23,7 +23,7 @@ export const createNewListingRoute = {
     // Inserting new listing
     await db.query(`
       INSERT INTO listings (id, name, description, price, user_id, views)
-      VALUES(?,?,?,?,?,?)`,
+      VALUES(?,?,?,?,?,?);`,
       [id, name, description, price, user_id, views]
     );
 
