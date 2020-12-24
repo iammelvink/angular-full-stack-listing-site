@@ -16,7 +16,9 @@ import {
 import {
   updateListingRoute
 } from './updateListing';
-
+import {
+  deleteListingRoute
+} from './deleteListing';
 // Export Array of all routes
 export default [
   getAllListingsRoute,
@@ -24,5 +26,6 @@ export default [
   addViewToListingRoute,
   getUserListingsRoute,
   createNewListingRoute,
-  updateListingRoute
+  updateListingRoute,
+  deleteListingRoute
 ];
