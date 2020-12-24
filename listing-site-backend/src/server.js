@@ -1,6 +1,4 @@
-import Hapi, {
-  server
-} from '@hapi/hapi';
+import Hapi from '@hapi/hapi';
 import routes from './routes';
 import {
   db
@@ -31,7 +29,7 @@ process.on('unhandledRejection', err => {
 });
 
 // On server shutdown signal
-process.on('SIGINT', () => {
+process.on('SIGINT', async () => {
   console.log('Stopping server...');
 
   // Wait for 10 seconds before forcing server shutdown
