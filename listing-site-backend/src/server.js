@@ -1,9 +1,16 @@
-import Hapi from '@hapi/hapi';
+import Hapi, {
+  server
+} from '@hapi/hapi';
 import routes from './routes';
+import {
+  db
+} from './database';
+
+let server;
 
 // Server configs
 const start = async () => {
-  const server = Hapi.server({
+  server = Hapi.server({
     port: 8000,
     host: 'localhost'
   });
@@ -11,6 +18,8 @@ const start = async () => {
   // Use forEach to add all routes to our Hapi server
   routes.forEach(route => server.route(route));
 
+  // Connect to database
+  db.connect();
   await server.start();
   console.log(`Server is listening on ${server.info.uri}`);
 }
@@ -20,6 +29,21 @@ process.on('unhandledRejection', err => {
   console.log(err);
   process.exit(1);
 });
+
+// On server shutdown signal
+process.on('SIGINT', () => {
+  console.log('Stopping server...');
+
+  // Wait for 10 seconds before forcing server shutdown
+  await server.stop({
+    timeout: 10000
+  });
+
+  // Close connection to db
+  db.end();
+  console.log('Server stopped');
+  process.exit(0);
+})
 
 // Start the Hapi server
 start();
