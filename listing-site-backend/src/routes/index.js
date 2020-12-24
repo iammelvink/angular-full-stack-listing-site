@@ -10,11 +10,15 @@ import {
 import {
   getUserListingsRoute
 } from './getUserListings';
+import {
+  createNewListingRoute
+} from './createNewListing';
 
 // Export Array of all routes
 export default [
   getAllListingsRoute,
   getListingRoute,
   addViewToListingRoute,
-  getUserListingsRoute
+  getUserListingsRoute,
+  createNewListingRoute
 ];
