@@ -1,4 +1,8 @@
-<div class="content-box">
+<!-- *ng = a structural directive -->
+<div class="content-box" *ngIf="!isLoading">
+    <p>This listing has been viewed
+        {{listing.views}} time(s)
+    </p>
     <!-- routerLink allows to change URL or content without reloading the page
         {{}} allows to insert data from TypeScript file into HTML page-->
     <a routerLink="/listings">
@@ -12,4 +16,7 @@
     <a routerLink="/contact/{{listing.id}}">
         <button>Contact Seller</button>
     </a>
+</div>
+<div class="content-box" *ngIf="isLoading">
+    <h3>Loading...</h3>
 </div>
