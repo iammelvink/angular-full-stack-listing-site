@@ -42,4 +42,18 @@ export class ListingsService {
             {}, // Empty object
             httpOptions);
     }
+
+    // Method to return listingsForUser to my-listings-page component
+    // Observable is a generic type
+    getListingsForUser(): Observable<Listing[]> {
+        // Making request to server
+        return this.http.get<Listing[]>('/api/users/12345/listings');
+    }
+
+    // Method to delete a listingById
+    // Observable is a generic type
+    deleteListing(id: string): Observable<any> {
+        // Making request to server
+        return this.http.delete<any>(`/api/listings/${id}`);
+    }
 }
