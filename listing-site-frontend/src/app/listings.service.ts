@@ -1,6 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AngularFireAuth } from '@angular/fire/auth';
+// import { auth } from 'firebase/app'; changed
+import firebase from 'firebase/app';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { observable, Observable } from 'rxjs';
 import { Listing } from './types';
 
 const httpOptions = {
@@ -10,6 +13,14 @@ const httpOptions = {
     })
 };
 
+const httpOptionsWithAuthToken = (token: object | any) => ({
+    headers: new HttpHeaders({
+        // Tells server that the request body of our POST request is a json object and a token
+        'Content-Type': 'application/json',
+        'AuthToken': token
+    })
+});
+
 @Injectable({
     providedIn: 'root'
 })
@@ -18,6 +29,9 @@ export class ListingsService {
     constructor(
         // Providing the HttpClient
         private http: HttpClient,
+
+        // Providing AngularFireAuth to the listings.service
+        private firebase: AngularFireAuth
     ) { }
 
     // Method to return listings to listings components
@@ -46,8 +60,29 @@ export class ListingsService {
     // Method to return listingsForUser to my-listings-page component
     // Observable is a generic type
     getListingsForUser(): Observable<Listing[]> {
-        // Making request to server
-        return this.http.get<Listing[]>('/api/users/12345/listings');
+        // Custom nested Observables
+        return new Observable<Listing[]>(observer => {
+            // Get current user
+            this.firebase.user.subscribe(user => {
+                // Get user auth token
+                user && user.getIdToken().then(token => {
+                    // Check if both user and token exist
+                    if (user && token) {
+                        // Making request to server
+                        this.http.get<Listing[]>(`/api/users/${user.uid}/listings`)
+                            .subscribe(listings => {
+                                observer.next(listings)
+                            });
+                    }
+                    // If both user and auth token DO NOT exist
+                    // return an empty array
+                    else {
+                        observer.next([]);
+                    }
+                })
+            })
+        })
+
     }
 
     // Method to delete a listingById
