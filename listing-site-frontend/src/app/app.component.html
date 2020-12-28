@@ -1,8 +1,20 @@
 <div id="page-wrap">
-    <div id="max-width-column">
+    <!-- Display if user is signed in -->
+    <div id="max-width-column"
+        *ngIf="(firebase.user | async)">
         <app-nav-bar></app-nav-bar>
         <div id="content-wrap">
             <router-outlet></router-outlet>
         </div>
+        <button (click)="signOutClicked()">Sign
+            Out</button>
+    </div>
+
+    <!-- Display if user is NOT signed in -->
+    <div id="max-width-column"
+        *ngIf="!(firebase.user | async)">
+        <h1>You need to sign in first</h1>
+        <button (click)="signInClicked()">Sign in
+            with Google</button>
     </div>
 </div>
