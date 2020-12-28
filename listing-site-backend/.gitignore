@@ -1,4 +1,8 @@
 # Created macos,linux,windows,node,angular,vscode,visualstudiocode,yarn
+
+#For Firebase service account credentials
+credentials.json
+
 ### Angular ###
 ## Angular ##
 # compiled output
