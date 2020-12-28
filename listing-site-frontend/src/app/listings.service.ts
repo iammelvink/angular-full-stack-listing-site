@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { fakeListings, fakeMyListings } from './fake-data';
+import { Observable } from 'rxjs';
 import { Listing } from './types';
 
 @Injectable({
@@ -7,10 +8,15 @@ import { Listing } from './types';
 })
 export class ListingsService {
 
-    constructor() { }
+    constructor(
+        // Providing the HttpClient
+        private http: HttpClient,
+    ) { }
 
     // Method to return listings to listings components
-    getListings(): Listing[] {
-        return fakeMyListings;
+    // Observable is a generic type
+    getListings(): Observable<Listing[]> {
+        // Making request to server
+        return this.http.get<Listing[]>('/api/listings');
     }
 }

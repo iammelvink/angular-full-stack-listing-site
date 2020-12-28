@@ -20,7 +20,9 @@ export class ListingsPageComponent implements OnInit {
 
     ngOnInit(): void {
         // Set listings member variable to listings from listingsService
-        this.listings = this.listingsService.getListings();
+        // by subscribing to the listingsService
+        // using a callback to assign our listings
+        this.listingsService.getListings().subscribe(listings => this.listings = listings);
     }
 
 }
