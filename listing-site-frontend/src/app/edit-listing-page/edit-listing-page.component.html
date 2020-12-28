@@ -1,13 +1,18 @@
-<div class="content-box">
+<!-- *ng = a structural directive -->
+<div class="content-box" *ngIf="listing">
     <h2>Edit Listing</h2>
     <!-- buttonText="Save Changes" = Prop for listing-data-form -->
     <!-- [currentName]="listing.name"
-    to pass strings and objects -->
+    to pass strings and objects
+    $event passes data to onSubmit method -->
     <app-listing-data-form
         buttonText="Save Changes"
         [currentName]="listing.name"
         [currentDescription]="listing.description"
         [currentPrice]="listing.price"
-        (onSubmit)="onSubmit()">
+        (onSubmit)="onSubmit($event)">
     </app-listing-data-form>
+</div>
+<div class="content-box" *ngIf="!listing">
+    <h3>Loading...</h3>
 </div>

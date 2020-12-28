@@ -65,4 +65,13 @@ export class ListingsService {
             { name, description, price },
             httpOptions);
     }
+
+    // Method to edit an existing listing
+    // Observable is a generic type
+    editListing(id: string, name: string, description: string, price: number): Observable<Listing> {
+        // Making request to server
+        return this.http.post<Listing>(`/api/listings/${id}`,
+            { name, description, price },
+            httpOptions);
+    }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Listing } from '../types';
-import { fakeMyListings } from '../fake-data';
+import { ListingsService } from '../listings.service';
 
 @Component({
     selector: 'app-edit-listing-page',
@@ -18,21 +18,32 @@ export class EditListingPageComponent implements OnInit {
         private route: ActivatedRoute,
         // Provider is to go to a route
         private router: Router,
+        // Injecting the ListingsService into the new-listing-page.component
+        // via the constructor
+        private listingsService: ListingsService,
     ) { }
 
     ngOnInit(): void {
         // Get id param from URL
-        const id = this.route.snapshot.paramMap.get('id');
-        // Assign matching listing to member variable
-        this.listing = fakeMyListings.find(listing => listing.id === id);
+        const id: string | any = this.route.snapshot.paramMap.get('id');
+        // Load existing listing
+        // by subscribing to the listingsService
+        // using a callback to assign our listing
+        this.listingsService.getListingById(id)
+            .subscribe(listing => {
+                this.listing = listing;
+            });
     }
 
-    // Call when onSubmit button is clicked
-    onSubmit(): void {
-        // Show alert
-        alert('Saving changes to the listing...');
-        // Then go to /my-listings
-        this.router.navigateByUrl('/my-listings');
+    // Call when submit button is clicked
+    // Edit existing listing
+    // by subscribing to the listingsService
+    // onSubmit({ name, description, price }) NOT working for now
+    onSubmit({ name, description, price }: { name: string, description: string, price: number }): void {
+        this.listingsService.editListing(this.listing.id, name, description, price).subscribe(() => {
+            // Then go to /my-listings
+            this.router.navigateByUrl('/my-listings');
+        });
     }
 
 }
