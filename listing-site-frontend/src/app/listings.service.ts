@@ -56,4 +56,13 @@ export class ListingsService {
         // Making request to server
         return this.http.delete<any>(`/api/listings/${id}`);
     }
+
+    // Method to create a new listing
+    // Observable is a generic type
+    createListing(name: string, description: string, price: number): Observable<Listing> {
+        // Making request to server
+        return this.http.post<Listing>('/api/listings',
+            { name, description, price },
+            httpOptions);
+    }
 }

@@ -1,8 +1,10 @@
 <div class="content-box">
     <h2>Create New Listing</h2>
-    <!-- buttonText="Create Listing" = Prop for listing-data-form -->
+    <!-- buttonText="Create Listing" = Prop for listing-data-form
+    $event passes data to onSubmit method
+    -->
     <app-listing-data-form
         buttonText="Create Listing"
-        (onSubmit)="onSubmit()">
+        (onSubmit)="onSubmit($event)">
     </app-listing-data-form>
 </div>
