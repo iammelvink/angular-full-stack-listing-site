@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Listing } from '../types';
-import { fakeListings } from '../fake-data';
+import { ListingsService } from '../listings.service';
 
 @Component({
     selector: 'app-listings-page',
@@ -12,11 +12,15 @@ export class ListingsPageComponent implements OnInit {
     // initialize to empty array
     listings: Listing[] = []
 
-    constructor() { }
+    constructor(
+        // Injecting the ListingsService into the listings-page.component
+        // via the constructor
+        private listingsService: ListingsService,
+    ) { }
 
     ngOnInit(): void {
-        // Set Listings member variable to fakeListings
-        this.listings = fakeListings;
+        // Set listings member variable to listings from listingsService
+        this.listings = this.listingsService.getListings();
     }
 
 }
