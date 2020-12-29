@@ -115,9 +115,22 @@ export class ListingsService {
     // Method to edit an existing listing
     // Observable is a generic type
     editListing(id: string, name: string, description: string, price: number): Observable<Listing> {
-        // Making request to server
-        return this.http.post<Listing>(`/api/listings/${id}`,
-            { name, description, price },
-            httpOptions);
+        // Custom nested Observables
+        return new Observable<Listing>(observer => {
+            // Get current user
+            this.firebase.user.subscribe(user => {
+                // Get user auth token
+                user && user.getIdToken().then(token => {
+                    // Check if both user and token exist
+                    if (user && token) {
+                        // Making request to server
+                        this.http.post<Listing>(`/api/listings/${id}`,
+                            { name, description, price },
+                            httpOptionsWithAuthToken(token))
+                            .subscribe(() => observer.next());
+                    }
+                })
+            })
+        })
     }
 }

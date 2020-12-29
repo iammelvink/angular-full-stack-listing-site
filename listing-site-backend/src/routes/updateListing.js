@@ -1,6 +1,8 @@
+import * as admin from 'firebase-admin';
 import {
   db
 } from '../database';
+import Boom from '@hapi/boom';
 
 export const updateListingRoute = {
   method: 'POST',
@@ -16,9 +18,17 @@ export const updateListingRoute = {
       description,
       price
     } = req.payload;
-    // Hard coding user_id
-    // We'll use authentication later
-    const user_id = '12345';
+    // Get auth token from frontend
+    const token = req.headers.authtoken;
+    // Get matching user from auth token
+    // Check if that matches with 
+    //user whose data is being requested
+    const user = await admin.auth().verifyIdToken(token);
+    // Set user id to matching user id
+    const user_id = user.user_id;
+
+    // Throw error if the user_id DOES NOT match with user_id whose data is being requested
+    if (user.user_id !== user_id) throw Boom.unauthorized('Only Signed in users can edit listings');
 
     // Updating existing listing
     await db.query(`

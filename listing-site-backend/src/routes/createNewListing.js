@@ -21,7 +21,7 @@ export const createNewListingRoute = {
     const user_id = user.user_id;
 
     // Throw error if the user_id DOES NOT match with user_id whose data is being requested
-    if (!user && !token) throw Boom.unauthorized('Only Signed in users can create listings');
+    if (user.user_id !== user_id) throw Boom.unauthorized('Only Signed in users can create listings');
     // Generate unique uuid
     const id = uuid();
     // Get payload from POST request
