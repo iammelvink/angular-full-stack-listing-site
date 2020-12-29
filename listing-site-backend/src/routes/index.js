@@ -19,6 +19,10 @@ import {
 import {
   deleteListingRoute
 } from './deleteListing';
+import {
+  staticFilesRoute,
+  filesRoutes
+} from './files';
 // Export Array of all routes
 export default [
   getAllListingsRoute,
@@ -27,5 +31,8 @@ export default [
   getUserListingsRoute,
   createNewListingRoute,
   updateListingRoute,
-  deleteListingRoute
+  deleteListingRoute,
+  // Below routes are for production
+  staticFilesRoute,
+  ...filesRoutes // ... = spread operator to join arrays at same level
 ];

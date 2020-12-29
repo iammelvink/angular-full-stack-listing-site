@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config(); // injects environment variables from .env into the server
 import Hapi from '@hapi/hapi';
+import inert from '@hapi/inert'; // to serve static files
 import routes from './routes';
 import * as admin from 'firebase-admin';
 import {
@@ -20,6 +21,9 @@ const start = async () => {
     port: 8000,
     host: 'localhost'
   });
+
+  // Register inert
+  await server.register(inert);
 
   // Use forEach to add all routes to our Hapi server
   routes.forEach(route => server.route(route));
