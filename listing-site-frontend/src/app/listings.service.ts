@@ -86,8 +86,21 @@ export class ListingsService {
     // Method to delete a listingById
     // Observable is a generic type
     deleteListing(id: string): Observable<any> {
-        // Making request to server
-        return this.http.delete<any>(`/api/listings/${id}`);
+        // Custom nested Observables
+        return new Observable<any>(observer => {
+            // Get current user
+            this.firebase.user.subscribe(user => {
+                // Get user auth token
+                user && user.getIdToken().then(token => {
+                    // Check if both user and token exist
+                    if (user && token) {
+                        // Making request to server
+                        this.http.delete<any>(`/api/listings/${id}`, httpOptionsWithAuthToken(token))
+                            .subscribe(() => observer.next());
+                    }
+                })
+            })
+        })
     }
 
     // Method to create a new listing
