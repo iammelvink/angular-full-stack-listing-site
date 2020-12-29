@@ -1,9 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/auth';
-// import { auth } from 'firebase/app'; changed
-import firebase from 'firebase/app';
 import { Injectable } from '@angular/core';
-import { observable, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Listing } from './types';
 
 const httpOptions = {
@@ -69,7 +67,7 @@ export class ListingsService {
                     // Check if both user and token exist
                     if (user && token) {
                         // Making request to server
-                        this.http.get<Listing[]>(`/api/users/${user.uid}/listings`)
+                        this.http.get<Listing[]>(`/api/users/${user.uid}/listings`, httpOptionsWithAuthToken(token))
                             .subscribe(listings => {
                                 observer.next(listings)
                             });
@@ -95,10 +93,23 @@ export class ListingsService {
     // Method to create a new listing
     // Observable is a generic type
     createListing(name: string, description: string, price: number): Observable<Listing> {
-        // Making request to server
-        return this.http.post<Listing>('/api/listings',
-            { name, description, price },
-            httpOptions);
+        // Custom nested Observables
+        return new Observable<Listing>(observer => {
+            // Get current user
+            this.firebase.user.subscribe(user => {
+                // Get user auth token
+                user && user.getIdToken().then(token => {
+                    // Check if both user and token exist
+                    if (user && token) {
+                        // Making request to server
+                        this.http.post<Listing>('/api/listings',
+                            { name, description, price },
+                            httpOptionsWithAuthToken(token))
+                            .subscribe(() => observer.next());
+                    }
+                })
+            })
+        })
     }
 
     // Method to edit an existing listing

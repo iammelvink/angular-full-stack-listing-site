@@ -2,6 +2,7 @@ import * as admin from 'firebase-admin';
 import {
   db
 } from '../database';
+import Boom from '@hapi/boom';
 
 export const getUserListingsRoute = {
   method: 'GET',
