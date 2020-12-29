@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config(); // injects environment variables from .env into the server
 import Hapi from '@hapi/hapi';
 import routes from './routes';
 import * as admin from 'firebase-admin';

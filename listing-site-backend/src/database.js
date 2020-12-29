@@ -1,15 +1,20 @@
 import mysql from 'mysql';
 
-// mysql db configs
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'hapi-server',
-  password: '',
-  database: 'listing-site'
-})
+// create connection
+let connection;
 
 export const db = {
-  connect: () => connection.connect(),
+  connect: () => {
+    // db configs
+    connection = mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME
+    });
+
+    connection.connect();
+  },
 
   // Converting sql query into a promise
   query: (queryString, escapedValues) =>
