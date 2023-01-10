@@ -30,7 +30,7 @@
     "@hapi/hapi": "^20.0.3",
     "@hapi/inert": "^6.0.3",
     "dotenv": "^8.2.0",
-    "firebase-admin": "^9.4.2",
+    "firebase-admin": "^11.4.1",
     "mysql": "^2.18.1",
     "uuid": "^8.3.2"
   },
